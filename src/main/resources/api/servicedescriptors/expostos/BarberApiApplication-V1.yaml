@@ -1,0 +1,1020 @@
+swagger: '2.0'
+info:
+  description: >
+    Barber - Api´s
+    
+  version: 1.0.0
+  title: BarberApplicationAPI
+  termsOfService: TBD
+  contact:
+    email: dlab@dornelasit.com.br
+  license:
+    name: TBD
+    url: 'http://dornelasit.ddns.net:8088'
+host: dornelasit.ddns.net:8088
+basePath: /barber-api
+tags:
+  - name: Usuario
+    description: Grupo de APIs de Usuario.
+    externalDocs:
+      description: TBD
+      url: 'http://dornelasit.ddns.net:8088'
+schemes:
+  - http
+  - https
+  
+paths:
+  # Paths 
+  '/app-usuario':
+    post:
+      tags:
+        - Usuario
+      summary: Cadastra ou atualiza dados de um usuario
+      description: 'Api responsavel pela manutencao de dados de usuarios'
+      operationId: manterUsuario
+      consumes:
+        - application/json      
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "usuarioResource"
+        description: "Requisicao de manutencao de um usuario"
+        required: true
+        schema:
+          $ref: "#/definitions/UsuarioResource"        
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+        '400':
+          description: Usuario nao encontrado
+        '500':
+          description: Erro na requisicao  
+          
+          
+    get:
+      tags:
+        - Usuario
+      summary: Retorna uma lista de usuarios
+      description: 'Api responsavel por retornar a lista de usuarios'
+      operationId: obterListaUsuarios
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/UsuarioResource'
+ 
+        '404':
+          description: Erro na requisicao 
+  
+  '/app-usuario/{idUsuario}':
+    get:
+      tags:
+        - Usuario
+      summary: Retorna dados do usuario pelo id
+      description: 'Api responsavel por retornar dados do usuario especifico'
+      operationId: obterUsuarioById
+      produces:
+        - application/json
+      parameters:
+        - name: idUsuario
+          in: path
+          description: Codigo identificador do Usuario
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            $ref: '#/definitions/UsuarioResource'
+        '400':
+          description: Erro na requisicao    
+        '404':
+          description: Usuario nao encontrado
+        
+  '/app-usuario/login':  
+    post:
+      tags:
+        - Usuario
+      summary: Retorna um tipo de status
+      description: 'Api responsavel por retornar um tipo de status especifico'
+      operationId: efetuarLogin
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "loginResource"
+        description: "Requisicao de manutencao de um usuario"
+        required: true
+        schema:
+          $ref: "#/definitions/LoginResource"    
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            $ref: '#/definitions/UsuarioResource'
+        '400':
+          description: Erro na requisicao    
+        '404':
+          description: Usuario nao encontrado 
+  '/app-tipo-usuario':
+    post:
+      tags:
+        - TipoUsuario
+      summary: Cadastra tipos de usuários
+      description: 'Api responsavel para inserir novos tipos de usuarios'
+      operationId: manterTipoUsuario
+      consumes:
+        - application/json      
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "tipoUsuarioResource"
+        description: "Requisicao de cadastro de tipo de usuario"
+        required: true
+        schema:
+          $ref: "#/definitions/TipoUsuarioResource"        
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+        '400':
+          description: Tipo de Usuario nao encontrado
+        '500':
+          description: Erro na requisicao 
+          
+
+    get:
+      tags:
+        - TipoUsuario
+      summary: Retorna uma lista de tipos de usuario
+      description: 'Api responsavel por retornar a lista de tipos de usuarios'
+      operationId: obterTipoUsuario
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/TipoUsuarioResource'
+ 
+        '404':
+          description: Erro na requisicao 
+          
+  '/app-tipo-usuario/{idTipoUsuario}':
+    get:
+      tags:
+        - TipoUsuario
+      summary: Retorna o tipo de usuario pelo id
+      description: 'Api responsavel por retornar um tipo de usuario especifico'
+      operationId: obterTipoUsuarioById
+      produces:
+        - application/json
+      parameters:
+        - name: idTipoUsuario
+          in: path
+          description: Codigo identificador do Tipo de Usuario
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            $ref: '#/definitions/TipoUsuarioResource'
+        '400':
+          description: Erro na requisicao    
+        '404':
+          description: Tipo de usuario nao encontrado
+   
+   
+   
+  '/app-status-agendamento':
+    get:
+      tags:
+        - StatusAgendamento
+      summary: Retorna uma lista de status de agendamento
+      description: 'Api responsavel por retornar a lista de tipos de status de agendamento cadastrado'
+      operationId: obterStatusAgendamento
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/StatusAgendamentoResource'
+ 
+        '404':
+          description: Erro na requisicao        
+  
+  '/app-status-agendamento/{idStatusAgendamento}':
+    get:
+      tags:
+        - StatusAgendamento
+      summary: Retorna um tipo de status
+      description: 'Api responsavel por retornar um tipo de status especifico'
+      operationId: obterStatusAgendamentoById
+      produces:
+        - application/json
+      parameters:
+        - name: idStatusAgendamento
+          in: path
+          description: Codigo identificador do Status de Agendamento
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            $ref: '#/definitions/StatusAgendamentoResource'
+        '400':
+          description: Erro na requisicao    
+        '404':
+          description: Tipo de status de agendamento nao encontrado
+          
+  '/app-estabelecimento':
+    post:
+      tags:
+        - Estabelecimento
+      summary: Cadastra ou atualiza estabelecimento
+      description: 'Api responsavel pela manutencao de dados de estabelecimento'
+      operationId: manterEstabelecimento
+      consumes:
+        - application/json      
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "EstabelecimentoResource"
+        description: "Requisicao de manutencao de um estabelecimento"
+        required: true
+        schema:
+          $ref: "#/definitions/EstabelecimentoResource"        
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+        '400':
+          description: Usuario nao encontrado
+        '500':
+          description: Erro na requisicao  
+          
+    get:
+      tags:
+        - Estabelecimento
+      summary: Retorna uma lista de estabelecimento
+      description: 'Api responsavel por retornar a lista de estabelecimento'
+      operationId: obterListaEstabelecimentos
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/EstabelecimentoResource'
+ 
+        '404':
+          description: Erro na requisicao 
+          
+  '/app-estabelecimento/{idEstabelecimento}':
+    get:
+      tags:
+        - Estabelecimento
+      summary: Retorna um estabelecimento pelo id
+      description: 'Api responsavel por retornar dados de um estabelecimento especifico'
+      operationId: obterEstabelecimentoById
+      produces:
+        - application/json
+      parameters:
+        - name: idEstabelecimento
+          in: path
+          description: Codigo identificador do Estabelecimento
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            $ref: '#/definitions/EstabelecimentoResource'
+        '400':
+          description: Erro na requisicao    
+        '404':
+          description: Estabelecimento nao encontrado
+    
+          
+  '/app-horario-funcionamento':
+    post:
+      tags:
+        - HorarioFuncionamento
+      summary: Cadastra ou atualiza horarios de funcionamento
+      description: 'Api responsavel para inserir novos tipos de usuarios'
+      operationId: manterHorarioFuncionamento
+      consumes:
+        - application/json      
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "HorarioFuncionamentoResource"
+        description: "Requisicao de cadastro de horario de funcionamento"
+        required: true
+        schema:
+          $ref: "#/definitions/HorarioFuncionamentoResource"        
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+        '400':
+          description: Estabelecimento nao encontrado
+        '500':
+          description: Erro na requisicao 
+          
+    get:
+      tags:
+        - HorarioFuncionamento
+      summary: Retorna uma lista de horarios de funcionamento
+      description: 'Api responsavel por retornar a horario de funcionamento do estabelecimento'
+      operationId: obterListaHorarioEstabelecimento
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/HorarioFuncionamentoResource'
+ 
+        '404':
+          description: Horario nao encontrado
+        '500':
+          description: Erro na requisicao
+          
+  '/app-horario-funcionamento/{idEstabelecimento}':
+    get:
+      tags:
+        - HorarioFuncionamento
+      summary: Retorna de horarios de funcionamento de um estabelecimento
+      description: 'Api responsavel por retornar a horario de funcionamento de um estabelecimento especifico'
+      parameters:
+        - name: idEstabelecimento
+          in: path
+          description: Codigo identificador do Estabelecimento
+          required: true
+          type: integer
+      operationId: obterHorarioFuncionamentoByEstabelecimento
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/HorarioFuncionamentoResource'
+        '404':
+          description: Servico nao encontrado
+        '500': 
+          description: Erro na requisicao 
+          
+  '/app-horario-funcionamento/{idEstabelecimento}/{idProfissional}':
+    get:
+      tags:
+        - HorarioFuncionamento
+      summary: Retorna de horarios de funcionamento de um estabelecimento
+      description: 'Api responsavel por retornar a horario de funcionamento de um estabelecimento  e profissional especifico'
+      parameters:
+        - name: idEstabelecimento
+          in: path
+          description: Codigo identificador do Estabelecimento
+          required: true
+          type: integer
+        - name: idProfissional
+          in: path
+          description: Codigo identificador do Estabelecimento
+          required: true
+          type: integer
+      operationId: obterHorarioFuncionamentoByEstabelecimentoAndProfissional
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/HorarioFuncionamentoResource'
+        '404':
+          description: Servico nao encontrado
+        '500': 
+          description: Erro na requisicao 
+          
+  '/app-servico':
+     post:
+      tags:
+        - Servico
+      summary: Cadastra ou atualiza servicos de salao
+      description: 'Api responsavel para inserir novos tipos de servico para o salao'
+      operationId: manterServico
+      consumes:
+        - application/json      
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "ServiceResource"
+        description: "Requisicao de cadastro de servico"
+        required: true
+        schema:
+          $ref: "#/definitions/ServiceResource"        
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+        '400':
+          description: Estabelecimento nao encontrado
+        '500':
+          description: Erro na requisicao 
+          
+  '/app-servico/{idEstabelecimento}':
+    get:
+      tags:
+        - Servico
+      summary: Retorna de horarios de funcionamento de um estabelecimento
+      description: 'Api responsavel por retornar a servicos em funcionamento um estabelecimento especifico'
+      parameters:
+        - name: idEstabelecimento
+          in: path
+          description: Codigo identificador do Estabelecimento
+          required: true
+          type: integer
+      operationId: obterServicosByEstabelecimento
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/ServiceResource'
+        '404':
+          description: Servico nao encontrado
+        '500':
+          description: Erro na requisicao 
+          
+  '/app-servico/id/{idServico}':
+    get:
+      tags:
+        - Servico
+      summary: Retorna um servico pelo ID
+      description: 'Api responsavel por retornar um servico pelo identificador'
+      operationId: obterServicoById
+      produces:
+        - application/json
+      parameters:
+        - name: idServico
+          in: path
+          description: Codigo identificador do Servico
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            $ref: '#/definitions/ServiceResource'
+        '400':
+          description: Erro na requisicao    
+        '404':
+          description: Servico nao encontrado
+          
+  '/app-profissional':
+     post:
+      tags:
+        - Profissional
+      summary: Cadastra ou atualiza profissional de estabelecimento
+      description: 'Api responsavel para inserir novos profissionais'
+      operationId: manterProfissional
+      consumes:
+        - application/json      
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "ProfissionalResource"
+        description: "Requisicao de cadastro de profissional"
+        required: true
+        schema:
+          $ref: "#/definitions/ProfissionalResource"        
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+        '500':
+          description: Erro na requisicao 
+      
+          
+  '/app-profissional/{idProfissional}':
+    get:
+      tags:
+        - Profissional
+      summary: Retorna dados do profissional pelo identificador
+      description: 'Api responsavel por retornar um profissional especifico'
+      parameters:
+        - name: idProfissional
+          in: path
+          description: Codigo identificador do Estabelecimento
+          required: true
+          type: integer
+      operationId: obterProfissionalById
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            $ref: '#/definitions/ProfissionalResource'
+        '404':
+          description: Servico nao encontrado
+        '500':
+          description: Erro na requisicao 
+          
+  '/app-profissional/lista/{idEstabelecimento}':
+    get:
+      tags:
+        - Profissional
+      summary: Retorna lista de profissionais de um estabelecimento
+      description: 'Api responsavel por retornar profissionais em um estabelecimento especifico'
+      parameters:
+        - name: idEstabelecimento
+          in: path
+          description: Codigo identificador do Estabelecimento
+          required: true
+          type: integer
+      operationId: obterProfissionalByEstabelecimento
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/ProfissionalResource'
+        '404':
+          description: Profissional nao encontrado
+        '500':
+          description: Erro na requisicao 
+          
+  '/app-formas-pagamento':
+     post:
+      tags:
+        - FormasPagamento
+      summary: Cadastra ou atualiza profissional de estabelecimento
+      description: 'Api responsavel para inserir novas formas de pagamento'
+      operationId: manterFormasPagamento
+      consumes:
+        - application/json      
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "FormasPagamentoResource"
+        description: "Requisicao de cadastro de forma de pagamento"
+        required: true
+        schema:
+          $ref: "#/definitions/FormasPagamentoResource"        
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+        '500':
+          description: Erro na requisicao 
+  
+     get:
+      tags:
+        - FormasPagamento
+      summary: Retorna uma lista de formas de pagamento
+      description: 'Api responsavel por retornar a lista de formas de pagamento do estabelecimento'
+      operationId: obterFormasPagamento
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/FormasPagamentoResource'
+        '500':
+          description: Erro na requisicao
+          
+  '/app-fluxo-caixa-entrada':
+     post:
+      tags:
+        - FluxoCaixaEntrada
+      summary: Grava valores de entrada do caixa do estabelecimento
+      description: 'Api responsavel para inserir valores de entrada no caixa'
+      operationId: manterFluxoCaixaEntrada
+      consumes:
+        - application/json      
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "FluxoCaixaEntradaResource"
+        description: "Requisicao de cadastro de valor no caixa"
+        required: true
+        schema:
+          $ref: "#/definitions/FluxoCaixaEntradaResource"        
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+        '500':
+          description: Erro na requisicao 
+         
+     get:
+      tags:
+        - FluxoCaixaEntrada
+      summary: Retorna uma lista de valores de entrada do caixa de todos estabelecimentos
+      description: 'Api responsavel por retornar a lista de entrada no caixa de todos estabelecimentos'
+      operationId: obterFluxoCaixaEntrada
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/FluxoCaixaEntradaResource'
+        '500':
+          description: Erro na requisicao
+          
+  '/app-fluxo-caixa-entrada/{idEstabelecimento}':
+    get:
+      tags:
+        - FluxoCaixaEntrada
+      summary: Retorna lista de fluxo de entrada de valores de um estabelecimento
+      description: 'Api responsavel por retornar valores de entrada de um estabelecimento especifico'
+      parameters:
+        - name: idEstabelecimento
+          in: path
+          description: Codigo identificador do Estabelecimento
+          required: true
+          type: integer
+      operationId: obterFluxoCaixaEntradaByEstabelecimento
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/FluxoCaixaEntradaResource'
+        '500':
+          description: Erro na requisicao 
+          
+  '/app-fluxo-caixa-saida':
+     post:
+      tags:
+        - FluxoCaixaSaida
+      summary: Solicita a gravacao de retirada de valores do estabelecimento
+      description: 'Api responsavel para retirada de valores do caixa do estabelecimento'
+      operationId: manterFluxoCaixaSaida
+      consumes:
+        - application/json      
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "FluxoCaixaSaida"
+        description: "Requisicao de retirada de valor no caixa"
+        required: true
+        schema:
+          $ref: "#/definitions/FluxoCaixaSaidaResource"        
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+        '500':
+          description: Erro na requisicao 
+         
+     get:
+      tags:
+        - FluxoCaixaSaida
+      summary: Retorna uma lista de valores retirados no caixa de todos estabelecimentos
+      description: 'Api responsavel por retornar a lista de valores retirados do caixa de todos estabelecimentos'
+      operationId: obterFluxoCaixaSaida
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/FluxoCaixaSaidaResource'
+        '500':
+          description: Erro na requisicao
+          
+  '/app-fluxo-caixa-saida/{idEstabelecimento}':
+    get:
+      tags:
+        - FluxoCaixaSaida
+      summary: Retorna lista de valores retirados de um estabelecimento
+      description: 'Api responsavel por retornar valores retirados de um estabelecimento especifico'
+      parameters:
+        - name: idEstabelecimento
+          in: path
+          description: Codigo identificador do Estabelecimento
+          required: true
+          type: integer
+      operationId: obterFluxoCaixaSaidaByEstabelecimento
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/FluxoCaixaSaidaResource'
+        '500':
+          description: Erro na requisicao 
+      
+  '/app-agendamento':
+     post:
+      tags:
+        - Agendamento
+      summary: Grava um agendamento na base de dados
+      description: 'Api responsavel para inserir agendamento na base de dados'
+      operationId: manterAgendamento
+      consumes:
+        - application/json      
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "AgendaResource"
+        description: "Requisicao de cadastro de agendamento"
+        required: true
+        schema:
+          $ref: "#/definitions/AgendaResource"        
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+        '500':
+          description: Erro na requisicao 
+          
+          
+  '/app-agendamento/agendamentos':
+    get:
+      tags:
+        - Agendamento
+      summary: Retorna lista de agendamento com base nos parametros informados
+      description: 'Api responsavel por retornar agendamentos com base nos parametros que foram informados'
+      parameters:
+        - name: idEstabelecimento
+          in: query
+          description: Codigo identificador do Estabelecimento
+          required: false
+          type: integer
+        
+        - name: dataAgendamento
+          in: query
+          description: Data do agendamento
+          required: false
+          type: string
+          
+        - name: idUsuario
+          in: query
+          description: Codigo identificador do Usuario
+          required: false
+          type: integer
+          
+        - name: idProfissional
+          in: query
+          description: Codigo identificador do Profissional
+          required: false
+          type: integer
+          
+        - name: statusAgendamento
+          in: query
+          description: Codigo identificador do status de Agendamento
+          required: false
+          type: integer
+          
+      operationId: obterAgendamentos
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operacao realizada com sucesso
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/AgendaResource'
+        '500':
+          description: Erro na requisicao 
+          
+          
+# DEFINICOES DE OBJETOS
+definitions:
+  UsuarioResource:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      email:
+        type: "string"
+      senha:
+        type: "string"
+      nome:
+        type: "string"
+      apelido:
+        type: "string"
+      celular:
+        type: "string"
+      flagAtivo:
+        type: "boolean"
+      tipoUsuario:
+        $ref: '#/definitions/TipoUsuarioResource'
+      estabelecimento_preferencia:
+        $ref: '#/definitions/EstabelecimentoResource'
+        
+  FiltroUsuarioResource:
+    type: "object"
+    properties:
+      codigoUsuario: 
+        type: "integer"
+        format: "int64"
+        
+  TipoUsuarioResource:
+    type: object
+    properties:
+      idTipoUsuario:
+        type: integer
+      descricao:
+        type: string
+        
+  StatusAgendamentoResource:
+    type: "object"
+    properties:
+      id: 
+        type: "integer"
+        format: "int64"
+      descricao:
+        type: "string"
+        
+  EstabelecimentoResource:
+    type: "object"
+    properties:
+      id: 
+        type: "integer"
+        format: "int64"
+      descricao:
+        type: "string"
+        
+  HorarioFuncionamentoResource:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      dia:
+        type: "string"
+      horario: 
+        type: "string"
+      flagDisponivel: 
+        type: "boolean"
+      estabelecimento:
+        $ref: '#/definitions/EstabelecimentoResource'
+      profissional:
+        $ref: '#/definitions/ProfissionalResource' 
+        
+  LoginResource:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      senha:
+        type: "string"
+        
+  ServiceResource:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      descricao:
+        type: "string"
+      duracao:
+        type: "integer"
+      flagAtivo:
+        type: "boolean"
+      valor:
+        type: "number"
+      estabelecimento:
+        $ref: '#/definitions/EstabelecimentoResource'
+        
+  ProfissionalResource:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      nome:
+        type: "string"
+      apelido:
+        type: "string"
+      celular:
+        type: "string"
+      flagAtivo:
+        type: "boolean"
+      estabelecimento:
+        $ref: '#/definitions/EstabelecimentoResource'
+  
+  FormasPagamentoResource:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      descricao:
+        type: "string"
+        
+  FluxoCaixaEntradaResource:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      valor:
+        type: "number"
+      data:
+        type: "string"
+      horario:
+        type: "string"
+      agenda: 
+        $ref: '#/definitions/AgendaResource'
+      estabelecimento:
+        $ref: '#/definitions/EstabelecimentoResource'
+        
+  AgendaResource:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      observacao: 
+        type: "string"
+      dataAgendada:
+        type: "string"
+      horaAgendada:
+        type: "string"
+      horaFinalizada:
+        type: "string"
+      estabelecimento:
+        $ref: '#/definitions/EstabelecimentoResource'
+      usuario:
+        $ref: '#/definitions/UsuarioResource'
+      servico:
+        $ref: '#/definitions/ServiceResource' 
+      status_agendamento:
+        $ref: '#/definitions/StatusAgendamentoResource'
+      forma_pagamento:
+        $ref: '#/definitions/FormasPagamentoResource'
+      profissional:
+        $ref: '#/definitions/ProfissionalResource' 
+      horario_funcionamento:
+        $ref: '#/definitions/HorarioFuncionamentoResource'
+    
+        
+        
+  FluxoCaixaSaidaResource:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      valor:
+        type: "number"
+      horario:
+        type: "string"
+      data:
+        type: "string"
+      estabelecimento:
+        $ref: '#/definitions/EstabelecimentoResource'
+      usuario:
+        $ref: '#/definitions/UsuarioResource'
+      
+  
+externalDocs:
+  description: TBD
+  url: 'http://dornelasit.ddns.net:8088'
